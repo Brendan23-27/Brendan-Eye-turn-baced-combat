@@ -3,72 +3,67 @@
 Brendan Eye turn baced combat 
 """
 import random
-class Player(object):
-    def __init__(self):
+class Fighter(object):
+    def __init__(self, hit_points, armor, hit_percent, hit_damage):
         super().__init__()
-        self.__player_hit_points=5
-        self.__player_armor_class=2
-        self.__player_hit_percent=random.randint(40,100)
-        self.__player_hit_dammge=random.randint(1,4)
-        
+        self.__hit_points=hit_points
+        self.__armor=armor
+        self.__hit_percent=hit_percent
+        self.__hit_damage=hit_damage
           
-        @property
-        def player_hit_points(self):
-            return self.__player_hit_points
-        
-        @property
-        def player_hit_percent(self):
-            return self.__player_hit_percent
-           
-        @property
-        def player_hit_dammge(self):
-            return self.__player_hit_dammge 
-
-
-class Monster(object):
-    def __init__(self):
-        super().__init__()
-        self.__monster_hit_points=15
-        self.__monster_hit_percent=random.randint(30,100)
-        self.__hit_dammge=random.randint(1,2)
-       
     @property
-    def monster_hit_points(self):
-        return self.__monster_hit_points
+    def hit_points(self):
+        return self.__hit_points
+   
+    @hit_points.setter
+    def hit_points(self, value):
+        self.__hit_points = value
+    
+    @property
+    def hit_damage(self):
+        return self.__hit_damage
+    
+    @hit_damage.setter
+    def hit_damage(value,self):
+        self.__hit_damage = value
            
     @property
-    def monster_hit_percent(self):
-        return self.__monster_hit_percent
-        
-    @property
-    def monster_hit_dammge(self):
-        return self.__monster_hit_dammge 
+    def hit_percent(self):
+        return self.__hit_percent
+    
+    @hit_percent.setter
+    def hit_percent(value,self):
+        self.__hit_percent = value
 
+def fight(fighter1, fighter2):
 
-def fight():
-    player=Player()
-    monster=Monster()
-    if player.player_hit_percent>=60:
-        monster.monster_hit_points -= player.player_hit_dammge
-        print(f"monster was hit for {player.player_hit_dammge}")
-    else:
-        print("the player missed")
-    if monster.monster_hit_percent>=60:
-        player.player_hit_points -= monster.monster_hit_dammge
-        print(f"player was hit for {monster.monster_hit_dammge}")
-    else:
-        print("the monster missed")
-    return(player,monster)
+    if fighter1.hit_percent> 60:
+        fighter2.hit_points -= fighter1.hit_damage
+        print(f"monster was hit for {fighter1.hit_damage}")
+
+    elif fighter1.hit_percent<= 60:
+       fighter1.hit_points -= fighter2.hit_damage
+       print(f"player was hit for {fighter2.hit_damage}")
+    
+    if fighter2.hit_percent> 60:
+        fighter2.hit_points -= fighter1.hit_damage
+        print(f"monster was hit for {fighter1.hit_damage}")
+
+    elif fighter2.hit_percent<= 60:
+       fighter2.hit_points -= fighter1.hit_damage
+       print(f"player was hit for {fighter2.hit_damage}")
+    
 
 def main():
-    player=Player()
-    monster=Monster()
+    player=Fighter(100, 10, random.randint(50,100), 35)
+    monster=Fighter(80, 10, random.randint(40,100), 30)
     keep_going=True
     while(keep_going):
-     fight()
-     if monster.monster_hit_points<=0:
-         print("you have slain your dragon good job")
-         keep_going=False
-     elif player.player_hit_points<=0:
-        keep_going=False
+         fight(player, monster)
+         if monster.hit_points<=0:
+             print("you have slain your dragon good job")
+             keep_going=False
+         elif player.hit_points<=0:
+             print("you died")
+             keep_going=False
 main() 
